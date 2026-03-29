@@ -1,0 +1,77 @@
+// Success: Loops — barbe, komabe, thamo, agao, inline var, nested loops
+// Expected output:
+// 1
+// 2
+// 3
+// 5
+// 4
+// 3
+// one-pass
+// 0
+// 1
+// 2
+// 3
+// 6
+// 1
+// 3
+// 4
+// 1
+// 1
+// 1
+// 2
+// 2
+// 1
+// 2
+// 2
+// 4
+
+// Increment (barbe) with existing variable
+1 rakho i -> shonkha |
+[i -> 1, i -> 3] {
+  bolo i |
+  i barbe
+}
+
+// Decrement (komabe) with existing variable
+5 rakho k -> shonkha |
+[k -> 5, k -> 3] {
+  bolo k |
+  k komabe
+}
+
+// Break (thamo)
+[once -> 1 -> shonkha, once -> 10] {
+  bolo "one-pass" |
+  thamo
+}
+
+// Inline variable declaration in loop header + accumulate sum
+0 rakho total -> shonkha |
+[ln -> 0 -> shonkha, ln -> 3] {
+  total + ln bodlao total |
+  bolo ln |
+  ln barbe
+}
+bolo total |
+
+// Continue (agao) — skips value 2, prints 1, 3, 4
+[ag -> 1 -> shonkha, ag -> 4] {
+  ag -> 2 {
+    [{==}] { agao | }
+  } |
+  bolo ag |
+  ag barbe
+}
+
+// Nested loops
+0 rakho pairs -> shonkha |
+[la -> 1 -> shonkha, la -> 2] {
+  [lb -> 1 -> shonkha, lb -> 2] {
+    pairs + 1 bodlao pairs |
+    bolo la |
+    bolo lb |
+    lb barbe
+  }
+  la barbe
+}
+bolo pairs |

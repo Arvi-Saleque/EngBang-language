@@ -1,0 +1,76 @@
+// Success: Functions — forward calls, zero-arg, multi-arg, nested call,
+//          function with conditional, result assignment and update
+// Expected output:
+// 10
+// 20
+// -8
+// 12
+// 16
+// 12
+// 6
+// 1
+// 12
+
+// Forward calls (definitions appear below)
+bolo add(3, 7) |
+bolo multiply(4, 5) |
+bolo negate(8) |
+bolo double(6) |
+bolo square(4) |
+
+// Function definitions
+add(fx -> shonkha, fy -> shonkha) -> shonkha {
+  ferao fx + fy |
+}
+
+multiply(fa -> shonkha, fb -> shonkha) -> shonkha {
+  ferao fa * fb |
+}
+
+negate(fz -> shonkha) -> shonkha {
+  ferao 0 - fz |
+}
+
+double(fn -> shonkha) -> shonkha {
+  ferao fn * 2 |
+}
+
+square(fn2 -> shonkha) -> shonkha {
+  ferao fn2 * fn2 |
+}
+
+// Function with conditional logic inside
+max2(ma -> shonkha, mb -> shonkha) -> shonkha {
+  ma -> mb {
+    [{>=}] {
+      ferao ma |
+    }
+  }
+  [] {
+    ferao mb |
+  }
+  |
+}
+
+sum3(sa -> shonkha, sb -> shonkha, sc -> shonkha) -> shonkha {
+  ferao sa + sb + sc |
+}
+
+isHigh(mh -> shonkha) -> shonkha {
+  mh -> 80 {
+    [{>=}] {
+      ferao 1 |
+    }
+  }
+  [] {
+    ferao 0 |
+  }
+  |
+}
+
+bolo max2(8, 12) |
+bolo sum3(1, 2, 3) |
+bolo isHigh(81) |
+
+// Nested function call as argument
+bolo max2(sum3(3, 4, 5), 10) |

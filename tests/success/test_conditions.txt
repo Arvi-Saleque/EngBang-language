@@ -1,0 +1,121 @@
+// Success: Conditionals — if-only, if-else, OR groups, AND-range, nested
+// Expected output:
+// yes
+// done
+// fail
+// pass
+// x is >= 5
+// y is < 5
+// mark in range
+// Outer if
+// Inner if
+
+// if-only (match)
+10 rakho cx -> shonkha |
+cx -> 10 {
+  [{==}] {
+    bolo "yes" |
+  }
+} |
+
+// if-only (no match — prints nothing)
+cx -> 99 {
+  [{==}] {
+    bolo "never" |
+  }
+} |
+
+bolo "done" |
+
+// if-else
+5 rakho ca -> shonkha |
+ca -> 10 {
+  [{>=}] {
+    bolo "pass" |
+  }
+}
+[] {
+  bolo "fail" |
+}
+|
+
+20 rakho cb -> shonkha |
+cb -> 10 {
+  [{>=}] {
+    bolo "pass" |
+  }
+}
+[] {
+  bolo "fail" |
+}
+|
+
+// Multiple OR condition groups ([{>}] [{==}] means >=)
+8 rakho ox -> shonkha |
+ox -> 5 {
+  [{>}] [{==}] {
+    bolo "x is >= 5" |
+  }
+}
+[] {
+  bolo "x is < 5" |
+}
+|
+
+3 rakho oy -> shonkha |
+oy -> 5 {
+  [{>}] [{==}] {
+    bolo "y is >= 5" |
+  }
+}
+[] {
+  bolo "y is < 5" |
+}
+|
+
+// AND-range condition (ar)
+85 rakho mark -> shonkha |
+mark -> 80 ar mark -> 100 {
+  [{>=}, {<=}] {
+    bolo "mark in range" |
+  }
+}
+[] {
+  bolo "mark out of range" |
+}
+|
+
+// Nested conditionals
+85 rakho marks -> shonkha |
+18 rakho viva  -> shonkha |
+92 rakho att   -> shonkha |
+1  rakho proj  -> shonkha |
+
+marks -> 80 ar viva -> 15 {
+  [{>=}, {>=}] {
+    bolo "Outer if" |
+    att -> 90 ar proj -> 1 {
+      [{>=}, {==}] {
+        bolo "Inner if" |
+      }
+    }
+    att -> 75 ar proj -> 1 {
+      [{>=}, {==}] {
+        bolo "Inner else-if" |
+      }
+    }
+    [] {
+      bolo "Inner else" |
+    }
+    |
+  }
+}
+marks -> 70 ar viva -> 12 {
+  [{>=}, {>=}] {
+    bolo "Outer else-if" |
+  }
+}
+[] {
+  bolo "Outer else" |
+}
+|

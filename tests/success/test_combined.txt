@@ -1,0 +1,32 @@
+// Success: Combined — variables, loop, conditional, forward function call
+// Expected output:
+// 15
+// 10
+// total is 10
+
+// Forward function call (definition is at the bottom)
+bolo addc(10, 5) |
+
+// Loop: accumulate 1 + 2 + 3 + 4 = 10
+0 rakho ctotal -> shonkha |
+[ci -> 1 -> shonkha, ci -> 4] {
+  ctotal + ci bodlao ctotal |
+  ci barbe
+}
+bolo ctotal |
+
+// Conditional: check the accumulated total
+ctotal -> 10 {
+  [{==}] {
+    bolo "total is 10" |
+  }
+}
+[] {
+  bolo "total is not 10" |
+}
+|
+
+// Function definition (used above via forward call)
+addc(cx -> shonkha, cy -> shonkha) -> shonkha {
+  ferao cx + cy |
+}

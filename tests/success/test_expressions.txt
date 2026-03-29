@@ -1,0 +1,19 @@
+// Success: Expression precedence and parentheses
+// Expected output:
+// 14
+// 20
+// 9
+// 18
+
+2 rakho p -> shonkha |
+3 rakho q -> shonkha |
+4 rakho r -> shonkha |
+
+p + q * r rakho expr1 -> shonkha |
+(p + q) * r rakho expr2 -> shonkha |
+p + q + r rakho expr3 -> shonkha |
+
+bolo expr1 |
+bolo expr2 |
+bolo expr3 |
+bolo (p + r) * q |

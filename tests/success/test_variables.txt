@@ -1,0 +1,28 @@
+// Success: Variable declarations — all four types, pakka, khaali, multi-decl
+// Expected output:
+// 10
+// 20
+// EngBang
+// 0
+// compiler
+// 1
+// 3.14
+// 99
+
+10 rakho x -> shonkha ar 20 rakho y -> shonkha ar "EngBang" rakho lang -> lekha |
+khaali rakho count -> shonkha ar khaali rakho title -> lekha ar khaali rakho ok -> shotto |
+3.14 rakho pi -> doshomik |
+99 pakka rakho LIMIT -> shonkha |
+
+"compiler" bodlao title |
+1 rakho temp_ok -> shotto |
+temp_ok bodlao ok |
+
+bolo x |
+bolo y |
+bolo lang |
+bolo count |
+bolo title |
+bolo ok |
+bolo pi |
+bolo LIMIT |

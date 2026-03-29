@@ -1,0 +1,43 @@
+// Success: Custom-step loops (poriborton_by) — +, *, /, float step
+// Expected output:
+// 0
+// 5
+// 10
+// 15
+// 20
+// 1
+// 2
+// 4
+// 8
+// 16
+// 64
+// 32
+// 16
+// 8
+// 4
+// 1
+// 2
+
+// +5 additive step: 0, 5, 10, 15, 20
+[si -> 0 -> shonkha, si -> 20] {
+  bolo si |
+  si poriborton_by +5
+}
+
+// *2 multiplicative step: 1, 2, 4, 8, 16
+[mi -> 1 -> shonkha, mi -> 20] {
+  bolo mi |
+  mi poriborton_by *2
+}
+
+// /2 divisive step (descending): 64, 32, 16, 8, 4
+[di -> 64 -> shonkha, di -> 4] {
+  bolo di |
+  di poriborton_by /2
+}
+
+// Float +0.5 step: 1.0, 1.5, 2.0
+[fi -> 1.0 -> doshomik, fi -> 2.0] {
+  bolo fi |
+  fi poriborton_by +0.5
+}

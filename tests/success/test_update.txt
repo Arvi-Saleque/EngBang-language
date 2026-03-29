@@ -1,0 +1,23 @@
+// Success: Updates (bodlao) — int, string, float, expression update
+// Expected output:
+// 10
+// 25
+// hello
+// world
+// 3.5
+// 7
+
+10 rakho x -> shonkha |
+bolo x |
+x + 15 bodlao x |
+bolo x |
+
+"hello" rakho msg -> lekha |
+bolo msg |
+"world" bodlao msg |
+bolo msg |
+
+3.5 rakho rate -> doshomik |
+bolo rate |
+7.0 bodlao rate |
+bolo rate |
