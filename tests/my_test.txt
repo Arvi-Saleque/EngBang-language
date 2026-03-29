@@ -1,2 +1,6 @@
-10 rakho x -> shonkha |
-bolo x |
+2 rakho b -> shonkha |
+3 rakho c -> shonkha |
+4 rakho d -> shonkha |
+
+b + c * d rakho a -> shonkha |
+bolo a |

@@ -8,3 +8,11 @@ bolo a + b |
 bolo a - b |
 bolo a * b |
 bolo a / b |
+
+10.0 rakho a -> doshomik |
+3.0 rakho b -> doshomik |
+
+bolo a + b |
+bolo a - b |
+bolo a * b |
+bolo a / b |
