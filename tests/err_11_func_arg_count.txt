@@ -1,0 +1,8 @@
+// ERR 11 — Wrong number of arguments in function call (too few)
+// Expected: SEM_ERROR — wrong argument count for 'add'
+
+add(x -> shonkha, y -> shonkha) -> shonkha {
+  ferao x + y |
+}
+
+bolo add(5) |

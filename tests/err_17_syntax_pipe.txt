@@ -1,0 +1,5 @@
+// ERR 17 — Syntax error: missing pipe terminator (|) after declaration
+// Expected: PARSE_ERROR
+
+10 rakho x -> shonkha
+bolo x |

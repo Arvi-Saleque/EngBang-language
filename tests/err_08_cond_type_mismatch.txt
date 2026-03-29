@@ -1,4 +1,4 @@
-// ERR 08: Conditional binding type mismatch (int variable compared to string value)
+// ERR 08 — Conditional binding type mismatch (int variable vs string literal)
 // Expected: SEM_ERROR — type mismatch in conditional binding
 
 10 rakho x -> shonkha |

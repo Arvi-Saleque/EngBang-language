@@ -1,7 +1,0 @@
-// Test 10: Loop with inline variable declaration (new var in loop header)
-// Expected output: 0, 1, 2, 3, 4
-
-[n -> 0 -> shonkha, n -> 4] {
-  bolo n |
-  n barbe
-}

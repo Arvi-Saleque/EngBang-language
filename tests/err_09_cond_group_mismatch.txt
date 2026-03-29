@@ -1,0 +1,16 @@
+// ERR 09 — Condition group count does not match binding count
+// Two bindings (ar) but only one comparator group supplied
+// Expected: SEM_ERROR — group count mismatch
+
+10 rakho x -> shonkha |
+1  rakho q -> shotto |
+
+x -> 10 ar q -> 1 {
+  [{==}] {
+    bolo "group mismatch" |
+  }
+}
+[] {
+  bolo "fallback" |
+}
+|

@@ -1,6 +1,0 @@
-// ERR 09: Function return type mismatch
-// Expected: SEM_ERROR — function declares shonkha but returns lekha
-
-bad() -> shonkha {
-  ferao "this is a string" |
-}

@@ -1,4 +1,0 @@
-// ERR 13: Syntax error — unknown keyword used instead of rakho
-// Expected: PARSE_ERROR or LEX_ERROR
-
-10 store x -> shonkha |

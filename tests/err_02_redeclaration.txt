@@ -1,4 +1,4 @@
-// ERR 02: Redeclaration of the same variable in the same scope
+// ERR 02 — Redeclaration of the same variable in the same scope
 // Expected: SEM_ERROR — redeclaration of 'x'
 
 10 rakho x -> shonkha |

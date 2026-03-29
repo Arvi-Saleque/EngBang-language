@@ -1,4 +1,4 @@
-// ERR 11: Loop control variable does not match the loop variable
+// ERR 15 — Loop control variable does not match the loop variable
 // Expected: SEM_ERROR — loop control variable 'j' must match loop variable 'i'
 
 1 rakho i -> shonkha |

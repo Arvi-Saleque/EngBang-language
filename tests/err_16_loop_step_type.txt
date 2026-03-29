@@ -1,0 +1,9 @@
+// ERR 16 — Custom-step type mismatch (float step on an integer loop variable)
+// Expected: SEM_ERROR — poriborton_by step type mismatch for integer loop variable 'i'
+
+1 rakho i -> shonkha |
+
+[i -> 1, i -> 5] {
+  bolo i |
+  i poriborton_by +0.5
+}

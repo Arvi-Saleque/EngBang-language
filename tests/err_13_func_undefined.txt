@@ -1,0 +1,4 @@
+// ERR 13 — Call to a completely undefined function
+// Expected: SEM_ERROR — undefined function 'mystery'
+
+bolo mystery(5) |

@@ -1,0 +1,8 @@
+// ERR 12 — Wrong argument type in function call (string passed to int param)
+// Expected: SEM_ERROR — type mismatch in argument for 'id'
+
+id(x -> shonkha) -> shonkha {
+  ferao x |
+}
+
+bolo id("hello") |

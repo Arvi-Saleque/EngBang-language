@@ -1,9 +1,0 @@
-// Test 09: Loop with existing variable and decrement (komabe)
-// Expected output: 5, 4, 3, 2, 1
-
-5 rakho k -> shonkha |
-
-[k -> 5, k -> 1] {
-  bolo k |
-  k komabe
-}

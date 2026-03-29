@@ -1,0 +1,460 @@
+// ============================================================
+// EngBang Comprehensive Success Test
+// Covers every language feature in a single program.
+//
+// Expected output (one value per line):
+//   10
+//   20
+//   EngBang
+//   0
+//   compiler
+//   1
+//   3.14
+//   99
+//   200
+//   13
+//   7
+//   30
+//   3
+//   13
+//   7.5
+//   25
+//   updated
+//   3.5
+//   14
+//   6
+//   9
+//   18
+//   yes
+//   done
+//   fail
+//   pass
+//   x is >= 5
+//   y is < 5
+//   mark in range
+//   Outer if
+//   Inner if
+//   1
+//   2
+//   3
+//   5
+//   4
+//   3
+//   one-pass
+//   0
+//   1
+//   2
+//   3
+//   6
+//   1
+//   1
+//   1
+//   2
+//   2
+//   1
+//   2
+//   2
+//   4
+//   0
+//   5
+//   10
+//   15
+//   20
+//   1
+//   2
+//   4
+//   8
+//   16
+//   64
+//   32
+//   16
+//   1
+//   2
+//   10
+//   20
+//   -8
+//   12
+//   16
+//   12
+//   6
+//   1
+//   12
+//   15
+//   10
+//   total is 10
+// ============================================================
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 1 — Variable declarations (all four types)
+// ────────────────────────────────────────────────────────────
+
+10 rakho x -> shonkha ar 20 rakho y -> shonkha ar "EngBang" rakho lang -> lekha |
+khaali rakho count -> shonkha ar khaali rakho title -> lekha ar khaali rakho ok -> shotto |
+3.14 rakho pi -> doshomik |
+99 pakka rakho LIMIT -> shonkha |
+
+// update uninitialised variables
+"compiler" bodlao title |
+1 rakho temp_ok -> shotto |
+temp_ok bodlao ok |
+
+bolo x |
+bolo y |
+bolo lang |
+bolo count |
+bolo title |
+bolo ok |
+bolo pi |
+bolo LIMIT |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 2 — Cast (banaw) and update with cast
+// ────────────────────────────────────────────────────────────
+
+"200" banaw shonkha rakho parsed -> shonkha |
+bolo parsed |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 3 — Arithmetic (+, -, *, /) on integers and floats
+// ────────────────────────────────────────────────────────────
+
+10 rakho a -> shonkha |
+3 rakho b -> shonkha |
+
+bolo a + b |
+bolo a - b |
+bolo a * b |
+bolo a / b |
+
+// float arithmetic
+10.0 rakho fa -> doshomik |
+2.5 rakho fb -> doshomik |
+bolo fa + fb |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 4 — Update (bodlao) and expression update
+// ────────────────────────────────────────────────────────────
+
+10 rakho n -> shonkha |
+n + 15 bodlao n |
+bolo n |
+
+"start" rakho msg -> lekha |
+"updated" bodlao msg |
+bolo msg |
+
+1.5 rakho rate -> doshomik |
+2.0 bodlao rate |
+bolo rate |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 5 — Expression precedence and parentheses
+// ────────────────────────────────────────────────────────────
+
+2 rakho p -> shonkha |
+3 rakho q -> shonkha |
+4 rakho r -> shonkha |
+
+p + q * r rakho expr1 -> shonkha |
+(p + q) * r rakho expr2 -> shonkha |
+p + q + r rakho expr3 -> shonkha |
+
+bolo expr1 |
+bolo expr2 |
+bolo expr3 |
+bolo (p + r) * q |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 6 — Conditionals
+// ────────────────────────────────────────────────────────────
+
+// if-only (match)
+10 rakho cx -> shonkha |
+cx -> 10 {
+  [{==}] {
+    bolo "yes" |
+  }
+} |
+
+// if-only (no match — prints nothing)
+cx -> 99 {
+  [{==}] {
+    bolo "never" |
+  }
+} |
+
+bolo "done" |
+
+// if-else
+5 rakho ca -> shonkha |
+ca -> 10 {
+  [{>=}] {
+    bolo "pass" |
+  }
+}
+[] {
+  bolo "fail" |
+}
+|
+
+20 rakho cb -> shonkha |
+cb -> 10 {
+  [{>=}] {
+    bolo "pass" |
+  }
+}
+[] {
+  bolo "fail" |
+}
+|
+
+// multiple OR condition groups  ([{>}] [{==}] means >= )
+8 rakho ox -> shonkha |
+ox -> 5 {
+  [{>}] [{==}] {
+    bolo "x is >= 5" |
+  }
+}
+[] {
+  bolo "x is < 5" |
+}
+|
+
+3 rakho oy -> shonkha |
+oy -> 5 {
+  [{>}] [{==}] {
+    bolo "y is >= 5" |
+  }
+}
+[] {
+  bolo "y is < 5" |
+}
+|
+
+// AND-range condition (ar)
+85 rakho mark -> shonkha |
+mark -> 80 ar mark -> 100 {
+  [{>=}, {<=}] {
+    bolo "mark in range" |
+  }
+}
+[] {
+  bolo "mark out of range" |
+}
+|
+
+// Nested conditionals
+85 rakho marks -> shonkha |
+18 rakho viva  -> shonkha |
+92 rakho att   -> shonkha |
+1  rakho proj  -> shonkha |
+
+marks -> 80 ar viva -> 15 {
+  [{>=}, {>=}] {
+    bolo "Outer if" |
+    att -> 90 ar proj -> 1 {
+      [{>=}, {==}] {
+        bolo "Inner if" |
+      }
+    }
+    att -> 75 ar proj -> 1 {
+      [{>=}, {==}] {
+        bolo "Inner else-if" |
+      }
+    }
+    [] {
+      bolo "Inner else" |
+    }
+    |
+  }
+}
+marks -> 70 ar viva -> 12 {
+  [{>=}, {>=}] {
+    bolo "Outer else-if" |
+  }
+}
+[] {
+  bolo "Outer else" |
+}
+|
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 7 — Loops
+// ────────────────────────────────────────────────────────────
+
+// Increment (barbe) with existing variable
+1 rakho i -> shonkha |
+[i -> 1, i -> 3] {
+  bolo i |
+  i barbe
+}
+
+// Decrement (komabe) with existing variable
+5 rakho k -> shonkha |
+[k -> 5, k -> 3] {
+  bolo k |
+  k komabe
+}
+
+// Break (thamo)
+[once -> 1 -> shonkha, once -> 10] {
+  bolo "one-pass" |
+  thamo
+}
+
+// Inline variable declaration in loop header + sum
+0 rakho total -> shonkha |
+[n -> 0 -> shonkha, n -> 3] {
+  total + n bodlao total |
+  bolo n |
+  n barbe
+}
+bolo total |
+
+// Nested loops
+0 rakho pairs -> shonkha |
+[la -> 1 -> shonkha, la -> 2] {
+  [lb -> 1 -> shonkha, lb -> 2] {
+    pairs + 1 bodlao pairs |
+    bolo la |
+    bolo lb |
+    lb barbe
+  }
+  la barbe
+}
+bolo pairs |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 8 — Custom-step loops (poriborton_by)
+// ────────────────────────────────────────────────────────────
+
+// +5 additive step
+[si -> 0 -> shonkha, si -> 20] {
+  bolo si |
+  si poriborton_by +5
+}
+
+// *2 multiplicative step
+[mi -> 1 -> shonkha, mi -> 20] {
+  bolo mi |
+  mi poriborton_by *2
+}
+
+// /2 divisive step (descending)
+[di -> 64 -> shonkha, di -> 16] {
+  bolo di |
+  di poriborton_by /2
+}
+
+// Float additive step
+[fi -> 1.0 -> doshomik, fi -> 2.0] {
+  bolo fi |
+  fi poriborton_by +0.5
+}
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 9 — Functions
+// ────────────────────────────────────────────────────────────
+
+// Forward calls (definitions appear after use)
+bolo add(3, 7) |
+bolo multiply(4, 5) |
+bolo negate(8) |
+
+// Forward single-arg functions
+bolo double(6) |
+bolo square(4) |
+
+// Function definitions
+add(fx -> shonkha, fy -> shonkha) -> shonkha {
+  ferao fx + fy |
+}
+
+multiply(fa2 -> shonkha, fb2 -> shonkha) -> shonkha {
+  ferao fa2 * fb2 |
+}
+
+negate(fz -> shonkha) -> shonkha {
+  ferao 0 - fz |
+}
+
+double(fn -> shonkha) -> shonkha {
+  ferao fn * 2 |
+}
+
+square(fn2 -> shonkha) -> shonkha {
+  ferao fn2 * fn2 |
+}
+
+// Function with conditional inside
+max2(ma -> shonkha, mb -> shonkha) -> shonkha {
+  ma -> mb {
+    [{>=}] {
+      ferao ma |
+    }
+  }
+  [] {
+    ferao mb |
+  }
+  |
+}
+
+sum3(sa -> shonkha, sb -> shonkha, sc -> shonkha) -> shonkha {
+  ferao sa + sb + sc |
+}
+
+isHigh(mh -> shonkha) -> shonkha {
+  mh -> 80 {
+    [{>=}] {
+      ferao 1 |
+    }
+  }
+  [] {
+    ferao 0 |
+  }
+  |
+}
+
+bolo max2(8, 12) |
+bolo sum3(1, 2, 3) |
+bolo isHigh(81) |
+
+// Nested function call
+bolo max2(sum3(3, 4, 5), 10) |
+
+
+// ────────────────────────────────────────────────────────────
+// SECTION 10 — Combined: variables + loop + conditional + forward call
+// ────────────────────────────────────────────────────────────
+
+bolo addc(10, 5) |
+
+0 rakho ctotal -> shonkha |
+[ci -> 1 -> shonkha, ci -> 4] {
+  ctotal + ci bodlao ctotal |
+  ci barbe
+}
+bolo ctotal |
+
+ctotal -> 10 {
+  [{==}] {
+    bolo "total is 10" |
+  }
+}
+[] {
+  bolo "total is not 10" |
+}
+|
+
+addc(cx2 -> shonkha, cy2 -> shonkha) -> shonkha {
+  ferao cx2 + cy2 |
+}

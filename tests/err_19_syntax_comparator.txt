@@ -1,0 +1,13 @@
+// ERR 19 — Syntax error: direct comparator style (== outside condition syntax) is not allowed
+// Expected: PARSE_ERROR
+
+10 rakho x -> shonkha |
+x == 10 {
+  [{==}] {
+    bolo "match" |
+  }
+}
+[] {
+  bolo "no match" |
+}
+|

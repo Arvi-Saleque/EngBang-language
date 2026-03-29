@@ -1,4 +1,4 @@
-// ERR 01: Use of undeclared variable
+// ERR 01 — Use of undeclared variable
 // Expected: SEM_ERROR — undeclared variable 'x'
 
 bolo x |

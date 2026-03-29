@@ -1,9 +1,0 @@
-// Basic semantic errors: undeclared use, redeclaration, update type mismatch, const update, cast mismatch
-
-bolo missing |
-10 rakho x -> shonkha |
-20 rakho x -> shonkha |
-"hello" bodlao x |
-100 pakka rakho LIMIT -> shonkha |
-200 bodlao LIMIT |
-10 banaw doshomik rakho y -> shonkha |

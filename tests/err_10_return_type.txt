@@ -1,0 +1,8 @@
+// ERR 10 — Function return type mismatch (declared shonkha, returns lekha)
+// Expected: SEM_ERROR — return type mismatch: expected shonkha, got lekha
+
+bad() -> shonkha {
+  ferao "this is a string" |
+}
+
+bolo bad() |
