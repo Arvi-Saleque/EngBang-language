@@ -1,0 +1,31 @@
+// Test 13: Combined — variables, loop, conditional, forward function call
+// Expected output: 15, 10, "total is 10"
+
+// Forward function call (add is defined below)
+bolo add(10, 5) |
+
+// Loop: accumulate 1 + 2 + 3 + 4 = 10
+0 rakho total -> shonkha |
+
+[i -> 1 -> shonkha, i -> 4] {
+  total + i bodlao total |
+  i barbe
+}
+
+bolo total |
+
+// Conditional: check the accumulated total
+total -> 10 {
+  [{==}] {
+    bolo "total is 10" |
+  }
+}
+[] {
+  bolo "total is not 10" |
+}
+|
+
+// Function definition
+add(x -> shonkha, y -> shonkha) -> shonkha {
+  ferao x + y |
+}

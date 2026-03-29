@@ -1,0 +1,27 @@
+// Test 07: Conditional — multiple OR-condition groups
+// Group syntax: [{op1}] [{op2}] means op1 OR op2
+// Expected output: "x is >= 5", "y is < 5"
+
+8 rakho x -> shonkha |
+
+x -> 5 {
+  [{>}] [{==}] {
+    bolo "x is >= 5" |
+  }
+}
+[] {
+  bolo "x is < 5" |
+}
+|
+
+3 rakho y -> shonkha |
+
+y -> 5 {
+  [{>}] [{==}] {
+    bolo "y is >= 5" |
+  }
+}
+[] {
+  bolo "y is < 5" |
+}
+|

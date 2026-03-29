@@ -1,0 +1,9 @@
+// ERR 10: Loop end variable name does not match init variable name
+// Expected: SEM_ERROR — loop end variable 'j' must match init variable 'i'
+
+1 rakho i -> shonkha |
+
+[i -> 1, j -> 5] {
+  bolo i |
+  i barbe
+}

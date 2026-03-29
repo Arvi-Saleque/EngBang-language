@@ -1,0 +1,4 @@
+// ERR 06: Cast type does not match declared type
+// Expected: SEM_ERROR — cast type (doshomik) must match declared type (shonkha)
+
+10 banaw doshomik rakho x -> shonkha |

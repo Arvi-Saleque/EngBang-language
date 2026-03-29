@@ -1,0 +1,18 @@
+// Test 04: Variable updates (bodlao)
+// Expected output: 10, 20, hello, world, 3.5, 7
+
+10 rakho x -> shonkha |
+"hello" rakho msg -> lekha |
+3.5 rakho rate -> doshomik |
+
+bolo x |
+20 bodlao x |
+bolo x |
+
+bolo msg |
+"world" bodlao msg |
+bolo msg |
+
+bolo rate |
+7.0 bodlao rate |
+bolo rate |

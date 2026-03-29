@@ -1,0 +1,12 @@
+// ERR 07: Conditional binding uses an undeclared variable
+// Expected: SEM_ERROR — undeclared variable 'y' in conditional
+
+y -> 10 {
+  [{==}] {
+    bolo "match" |
+  }
+}
+[] {
+  bolo "no match" |
+}
+|

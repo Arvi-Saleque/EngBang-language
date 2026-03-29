@@ -1,0 +1,5 @@
+// ERR 04: Type mismatch in update (string value into int variable)
+// Expected: SEM_ERROR — type mismatch in update: x is shonkha, not lekha
+
+10 rakho x -> shonkha |
+"hello" bodlao x |

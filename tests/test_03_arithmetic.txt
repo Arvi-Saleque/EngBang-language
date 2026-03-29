@@ -1,0 +1,10 @@
+// Test 03: Arithmetic expressions (+, -, *, /)
+// Expected output: 13, 7, 30, 3
+
+10 rakho a -> shonkha |
+3 rakho b -> shonkha |
+
+bolo a + b |
+bolo a - b |
+bolo a * b |
+bolo a / b |

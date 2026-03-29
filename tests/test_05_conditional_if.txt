@@ -1,0 +1,20 @@
+// Test 05: Conditional — if only (no else)
+// Expected output: "x equals 10", "done" (second if does not match, prints nothing)
+
+10 rakho x -> shonkha |
+
+x -> 10 {
+  [{==}] {
+    bolo "x equals 10" |
+  }
+} |
+
+5 rakho y -> shonkha |
+
+y -> 10 {
+  [{==}] {
+    bolo "y equals 10" |
+  }
+} |
+
+bolo "done" |

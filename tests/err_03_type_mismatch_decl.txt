@@ -1,0 +1,4 @@
+// ERR 03: Type mismatch in declaration (string value assigned to int type)
+// Expected: SEM_ERROR — type mismatch: declared shonkha but got lekha
+
+"hello" rakho x -> shonkha |

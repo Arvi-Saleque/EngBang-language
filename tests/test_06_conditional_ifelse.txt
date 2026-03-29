@@ -1,0 +1,26 @@
+// Test 06: Conditional — if / else
+// Expected output: "fail", "pass"
+
+5 rakho a -> shonkha |
+
+a -> 10 {
+  [{>=}] {
+    bolo "pass" |
+  }
+}
+[] {
+  bolo "fail" |
+}
+|
+
+20 rakho b -> shonkha |
+
+b -> 10 {
+  [{>=}] {
+    bolo "pass" |
+  }
+}
+[] {
+  bolo "fail" |
+}
+|

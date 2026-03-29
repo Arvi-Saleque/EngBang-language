@@ -1,0 +1,12 @@
+// Test 01: Variable declarations — all four types
+// Expected output: 10, 3.14, EngBang, 1
+
+10 rakho x -> shonkha |
+3.14 rakho pi -> doshomik |
+"EngBang" rakho lang -> lekha |
+1 rakho flag -> shotto |
+
+bolo x |
+bolo pi |
+bolo lang |
+bolo flag |

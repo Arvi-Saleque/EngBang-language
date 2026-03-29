@@ -1,0 +1,6 @@
+// ERR 05: Attempt to update a constant (pakka) variable
+// Expected: SEM_ERROR — cannot update constant 'MAX'
+
+100 pakka rakho MAX -> shonkha |
+bolo MAX |
+200 bodlao MAX |
