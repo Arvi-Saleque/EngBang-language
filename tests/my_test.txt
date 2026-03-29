@@ -1,6 +1,89 @@
-2 rakho b -> shonkha |
-3 rakho c -> shonkha |
-4 rakho d -> shonkha |
+// EngBang: Student Score Analyser
+// Features: types, constants, functions, loops (barbe / komabe / poriborton_by),
+//           thamo (break), agao (continue), float, cast, conditionals
 
-b + c * d rakho a -> shonkha |
-bolo a |
+// ─── Constants ──────────────────────────────────────────────────────────
+50  pakka rakho PASS_MARK    -> shonkha |
+5   pakka rakho NUM_STUDENTS -> shonkha |
+
+// ─── isPassing(score) → 1 if pass, 0 if fail ────────────────────────────
+isPassing(score -> shonkha) -> shonkha {
+  score -> PASS_MARK {
+    [{>=}] { ferao 1 | }
+  } |
+  ferao 0 |
+}
+
+// ─── gradePoint(score) → 4=A  3=B  2=C  1=F ────────────────────────────
+gradePoint(score -> shonkha) -> shonkha {
+  score -> 90 { [{>=}] { ferao 4 | } } |
+  score -> 75 { [{>=}] { ferao 3 | } } |
+  score -> 60 { [{>=}] { ferao 2 | } } |
+  ferao 1 |
+}
+
+// ─── sumFirst(n) → 1 + 2 + ... + n ─────────────────────────────────────
+sumFirst(n -> shonkha) -> shonkha {
+  0 rakho s -> shonkha |
+  [i -> 1 -> shonkha, i -> n] {
+    s + i bodlao s |
+    i barbe
+  }
+  ferao s |
+}
+
+// ─── Main ───────────────────────────────────────────────────────────────
+
+// Counters
+0 rakho passing    -> shonkha |
+0 rakho failing    -> shonkha |
+0 rakho totalScore -> shonkha |
+0 rakho gpTotal    -> shonkha |
+
+// === Section 1: Process scores 40, 55, 70, 85 (step +15, skip 70)
+// Loop goes: 40 → 55 → 70(skip) → 85 → 100(stop, > 90)
+[score -> 40 -> shonkha, score -> 90] {
+
+  // agao: skip the average score of 70
+  score -> 70 {
+    [{==}] { agao | }
+  } |
+
+  // Accumulate totals
+  totalScore + score bodlao totalScore |
+  gpTotal + gradePoint(score) bodlao gpTotal |
+
+  // Count pass / fail using a local variable
+  0 rakho passed -> shonkha |
+  isPassing(score) bodlao passed |
+  passed -> 1 { [{==}] { passing + 1 bodlao passing | } } |
+  passed -> 0 { [{==}] { failing + 1 bodlao failing | } } |
+
+  bolo score |
+
+  score poriborton_by +15
+}
+
+// Summary
+bolo passing |
+bolo failing |
+bolo totalScore |
+bolo gpTotal |
+
+// === Section 2: Countdown 10 → 6, stop before 5 (komabe + thamo)
+[c -> 10 -> shonkha, c -> 5] {
+  c -> 5 {
+    [{==}] { thamo | }
+  } |
+  bolo c |
+  c komabe
+}
+
+// === Section 3: Sum of first NUM_STUDENTS natural numbers (function call)
+bolo sumFirst(NUM_STUDENTS) |
+
+// === Section 4: Float — average grade point
+gpTotal banaw doshomik rakho gpFloat -> doshomik |
+3.0 rakho count -> doshomik |
+gpFloat / count rakho avgGP -> doshomik |
+bolo avgGP |

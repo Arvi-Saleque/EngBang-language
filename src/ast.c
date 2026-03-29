@@ -194,6 +194,14 @@ AstNode* ast_stmt_return(AstExpr* expr, int line) {
   return n;
 }
 
+AstNode* ast_stmt_break(int line) {
+  return alloc_node(STMT_BREAK, line);
+}
+
+AstNode* ast_stmt_continue(int line) {
+  return alloc_node(STMT_CONTINUE, line);
+}
+
 /* ================================================================
    CONDITIONAL BLOCK CONSTRUCTOR
    Takes ownership of both arrays.
@@ -309,6 +317,10 @@ void ast_list_free(AstNode* list) {
       case STMT_RETURN:
         ast_expr_free(list->as.ret.expr);
         break;
+      case STMT_BREAK:
+        break;  /* no owned data */
+      case STMT_CONTINUE:
+        break;  /* no owned data */
     }
     free(list);
     list = next;

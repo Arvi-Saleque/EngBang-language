@@ -223,7 +223,8 @@ static void sem_check_cond(AstNode* n) {
                 "Binding uses undeclared variable '%s'", var_name);
       } else {
         Type expected_t = sem_check_expr(cb->binds[b].expr, n->line);
-        if (expected_t != T_UNKNOWN && expected_t != s->type) {
+        if (expected_t != T_UNKNOWN && expected_t != s->type
+            && !(s->type == T_BOOL && expected_t == T_INT)) {
           sem_err(n->line,
                   "Type mismatch in binding for '%s' (expected %s, got %s)",
                   var_name, type_name(s->type), type_name(expected_t));
@@ -395,6 +396,12 @@ static void sem_check_node(AstNode* n) {
       }
       break;
     }
+
+    case STMT_BREAK:
+      break;  /* always valid — semantic validation is done */
+
+    case STMT_CONTINUE:
+      break;  /* always valid */
   }
 }
 

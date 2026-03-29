@@ -1,0 +1,3 @@
+// Parse / lex error: unknown keyword
+
+10 store x -> shonkha |

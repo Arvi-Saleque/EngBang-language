@@ -1,0 +1,34 @@
+// Basic initialization / declarations / default values / constants / casts
+// Expected output:
+// 10
+// 20
+// EngBang
+// 0
+// compiler
+// 1
+// 3.5
+// 100
+// 456
+// 133
+
+10 rakho x -> shonkha ar 20 rakho y -> shonkha ar "EngBang" rakho lang -> lekha |
+khaali rakho count -> shonkha ar khaali rakho title -> lekha ar khaali rakho ok -> shotto |
+3.5 rakho pi -> doshomik |
+100 pakka rakho LIMIT -> shonkha |
+"123" banaw shonkha rakho parsed -> shonkha |
+parsed + x rakho total -> shonkha |
+1 rakho temp_ok -> shotto |
+temp_ok bodlao ok |
+"compiler" bodlao title |
+"456" banaw shonkha bodlao parsed |
+
+bolo x |
+bolo y |
+bolo lang |
+bolo count |
+bolo title |
+bolo ok |
+bolo pi |
+bolo LIMIT |
+bolo parsed |
+bolo total |

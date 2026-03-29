@@ -1,0 +1,4 @@
+// Parse error: missing pipe terminator
+
+10 rakho x -> shonkha
+bolo x |

@@ -348,6 +348,14 @@ static void tac_stmt(AstNode* n) {
       }
       break;
     }
+
+    case STMT_BREAK:
+      emit("break");
+      break;
+
+    case STMT_CONTINUE:
+      emit("continue");
+      break;
   }
 }
 

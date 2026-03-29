@@ -27,6 +27,8 @@ static void    exec_stmts(AstNode* list);
    ================================================================ */
 static EvalVal g_return_val = { T_UNKNOWN, {0}, 0 };
 static int     g_returning  = 0;
+static int     g_breaking   = 0;  /* set by thamo (break) inside a loop */
+static int     g_continuing = 0;  /* set by agao (continue) inside a loop */
 
 /* ================================================================
    Expression evaluator
@@ -236,6 +238,11 @@ static int exec_cond_block(AstCondBlock* cb) {
    ================================================================ */
 
 static void exec_decl(AstNode* n) {
+  /* Declare the symbol at runtime — needed for function-local variables
+     whose scope was created then popped during the semantic pass. */
+  symtab_declare(n->as.decl.id, n->as.decl.declared_type,
+                 n->as.decl.is_const, (n->as.decl.value != NULL), n->line);
+
   if (!n->as.decl.value) return;   /* khaali — keep symtab default */
 
   EvalVal ev = exec_expr(n->as.decl.value);
@@ -278,8 +285,11 @@ static void exec_cast(AstNode* n) {
     eval_free(&src);
     return;
   }
-  symtab_set_value(n->as.cast.id, casted.type, casted.val);
   eval_free(&src);
+  /* Declare at runtime if this is a new variable (cast_decl) */
+  if (!n->as.cast.is_update)
+    symtab_declare(n->as.cast.id, n->as.cast.declared_type, 0, 1, n->line);
+  symtab_set_value(n->as.cast.id, casted.type, casted.val);
   eval_free(&casted);
 }
 
@@ -314,8 +324,9 @@ static void exec_loop(AstNode* n) {
   if (!s) return;
 
   if (n->as.loop.step == LOOP_STOP) {
-    /* thamo: run body once */
+    /* thamo as loop_ctrl: run body once */
     exec_stmts(n->as.loop.body);
+    g_breaking = 0;  /* consume any break from inside */
     return;
   }
   /* Set initial value */
@@ -349,6 +360,8 @@ static void exec_loop(AstNode* n) {
     if (!cont) break;
     exec_stmts(n->as.loop.body);
     if (g_returning) break;
+    if (g_breaking)   { g_breaking   = 0; break; }  /* thamo break stmt */
+    if (g_continuing) { g_continuing = 0; }          /* agao continue: fall through to advance */
     /* Advance */
     s = symtab_lookup(v);
     if (!s) break;
@@ -417,7 +430,9 @@ static void exec_stmt(AstNode* n) {
 
     case STMT_DEFAULT_DECL:
     case STMT_CONST_DEFAULT:
-      /* Nothing to do — symtab already has default zero/empty value */
+      /* Declare at runtime so function-local khaali vars exist in symtab. */
+      symtab_declare(n->as.decl.id, n->as.decl.declared_type,
+                     n->as.decl.is_const, 0, n->line);
       break;
 
     case STMT_UPDATE:
@@ -450,11 +465,19 @@ static void exec_stmt(AstNode* n) {
       g_return_val = n->as.ret.expr ? exec_expr(n->as.ret.expr) : eval_unknown();
       g_returning  = 1;
       break;
+
+    case STMT_BREAK:
+      g_breaking = 1;
+      break;
+
+    case STMT_CONTINUE:
+      g_continuing = 1;
+      break;
   }
 }
 
 static void exec_stmts(AstNode* list) {
-  for (AstNode* n = list; n && !g_returning; n = n->next)
+  for (AstNode* n = list; n && !g_returning && !g_breaking && !g_continuing; n = n->next)
     exec_stmt(n);
 }
 

@@ -1,0 +1,40 @@
+// Custom loop step coverage: +, *, /, float step
+// Expected output:
+// 0
+// 5
+// 10
+// 15
+// 20
+// 1
+// 2
+// 4
+// 8
+// 16
+// 64
+// 32
+// 16
+// 8
+// 4
+// 1
+// 1.5
+// 2
+
+[i -> 0 -> shonkha, i -> 20] {
+  bolo i |
+  i poriborton_by +5
+}
+
+[j -> 1 -> shonkha, j -> 20] {
+  bolo j |
+  j poriborton_by *2
+}
+
+[k -> 64 -> shonkha, k -> 4] {
+  bolo k |
+  k poriborton_by /2
+}
+
+[f -> 1.0 -> doshomik, f -> 2.0] {
+  bolo f |
+  f poriborton_by +0.5
+}

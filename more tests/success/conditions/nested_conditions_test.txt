@@ -1,0 +1,39 @@
+// Nested if / else-if / else chain
+// Expected output:
+// Outer if
+// Inner if
+
+85 rakho marks -> shonkha |
+18 rakho viva -> shonkha |
+92 rakho attendance -> shonkha |
+1 rakho project -> shonkha |
+
+marks -> 80 ar viva -> 15 {
+  [{>=}, {>=}] {
+    bolo "Outer if" |
+
+    attendance -> 90 ar project -> 1 {
+      [{>=}, {==}] {
+        bolo "Inner if" |
+      }
+    }
+    attendance -> 75 ar project -> 1 {
+      [{>=}, {==}] {
+        bolo "Inner else-if" |
+      }
+    }
+    [] {
+      bolo "Inner else" |
+    }
+    |
+  }
+}
+marks -> 70 ar viva -> 12 {
+  [{>=}, {>=}] {
+    bolo "Outer else-if" |
+  }
+}
+[] {
+  bolo "Outer else" |
+}
+|

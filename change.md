@@ -1,77 +1,156 @@
-# EngBang Compiler — Change Log
+# EngBang Keyword & Syntax Reference
 
-## Feature: Custom Loop Step (`poriborton_by`)
+## Data Types
 
-### Problem
-The old loop syntax only supported fixed steps:
-- `barbe`  → always `i += 1`
-- `komabe` → always `i -= 1`
-- `thamo`  → run body once
-
-There was no way to write `i += 10`, `i *= 5`, `i /= 2`, etc.
-
-### Solution
-A new keyword `poriborton_by` (Bengali: "change by") with the syntax:
-
-```
-var_name poriborton_by OP amount
-```
-
-| Example                   | Meaning      |
-|---------------------------|--------------|
-| `x poriborton_by +5`      | `x = x + 5`  |
-| `x poriborton_by -2`      | `x = x - 2`  |
-| `x poriborton_by *10`     | `x = x * 10` |
-| `x poriborton_by /4`      | `x = x / 4`  |
-
-The `amount` can be an integer or float literal. `+` and `*` operators use `<=` as the loop-continue condition (ascending); `-` and `/` use `>=` (descending).
+| EngBang    | C equivalent | Meaning              |
+|------------|--------------|----------------------|
+| `shonkha`  | `int`        | Integer number       |
+| `doshomik` | `float`      | Decimal number       |
+| `lekha`    | `char*`      | String / text        |
+| `shotto`   | `bool`       | Boolean (true/false) |
 
 ---
 
-## Files Modified
+## Variable Declaration
 
-### `include/ast.h`
-- Added `LOOP_CUSTOM` to the `LoopStep` enum.
-- Added two new fields to `LoopData`:
-  - `char step_op`   — stores the operator character (`+`, `-`, `*`, `/`).
-  - `AstExpr* step_expr` — owns the step amount expression.
-- Updated `ast_stmt_loop` declaration to accept `char step_op` and `AstExpr* step_expr`.
+| EngBang                                   | C equivalent       |
+|-------------------------------------------|--------------------|
+| `5 rakho x -> shonkha \|`                 | `int x = 5;`       |
+| `khaali rakho x -> shonkha \|`            | `int x = 0;`       |
+| `5 pakka rakho x -> shonkha \|`           | `const int x = 5;` |
+| `5 banaw shonkha rakho x -> shonkha \|`   | `int x = (int)5;`  |
 
-### `src/ast.c`
-- Updated `ast_stmt_loop` implementation to store `step_op` and `step_expr`.
-- Updated `ast_list_free` (`STMT_LOOP` branch) to call `ast_expr_free` on `step_expr` to prevent memory leaks.
-
-### `src/lexer.l`
-- Added rule: `"poriborton_by" { return KW_PORIBORTON_BY; }`
-
-### `src/parser.y`
-- Added `LoopStepData` struct (`{ char step_op; AstExpr* step_expr; }`) to `%code requires`.
-- Extended `LoopCtrlData` struct with `char step_op` and `AstExpr* step_expr` fields.
-- Added `LoopStepData lstep` to the `%union`.
-- Added `%token KW_PORIBORTON_BY`.
-- Added `%type <lstep> loop_step` declaration.
-- Updated existing `loop_ctrl` alternatives for `barbe`, `komabe`, `thamo` to zero-initialise the new fields.
-- Added new `loop_ctrl` alternative: `ID KW_PORIBORTON_BY loop_step`.
-- Added new `loop_step` non-terminal with 10 rules covering all combinations of operator (`PLUS`, `MINUS`, `STAR`, `SLASH`, or bare `INT`/`FLOAT` with embedded sign) and literal type (`INT` / `FLOAT`).
-- Updated the `loop_stmt` action to forward `step_op` and `step_expr` to `ast_stmt_loop`.
-
-### `src/semantic.c`
-- In the `STMT_LOOP` case, added a check for `LOOP_CUSTOM`: validates that the `step_expr` type matches the loop variable's type (with the usual INT→FLOAT widening allowance).
-
-### `src/exec.c`
-- Updated the loop condition check to handle `LOOP_CUSTOM`:  `+`/`*` operators → ascending condition (`var <= end`); `-`/`/` operators → descending condition (`var >= end`).
-- Replaced the hardcoded `+1`/`-1` advance block with a switch over `step_op` that applies the correct arithmetic operation (`+`, `-`, `*`, `/`) using the evaluated `step_expr`.
-
-### `src/tac.c`
-- Updated the TAC loop condition branch to handle `LOOP_CUSTOM` (same ascending/descending logic as exec.c).
-- Updated the TAC step-advance emit to output `var = var OP amount` for `LOOP_CUSTOM` instead of the hardcoded `+1`/`-1`.
+| Keyword  | C equivalent  | Meaning                   |
+|----------|---------------|---------------------------|
+| `rakho`  | `=` (declare) | Declare a variable        |
+| `pakka`  | `const`       | Make variable constant    |
+| `khaali` | (default)     | Declare with default value |
+| `banaw`  | `(type)`      | Type cast                 |
 
 ---
 
-## New Files
+## Variable Update
 
-### `tests/test_14_loop_custom_step.txt`
-A test covering three `poriborton_by` loops:
-1. `+10` step — accumulates a sum.
-2. `*2`  step — doubles the counter each iteration.
-3. `/2`  step — halves the counter each iteration (descending).
+| EngBang                             | C equivalent     |
+|-------------------------------------|------------------|
+| `10 bodlao x \|`                    | `x = 10;`        |
+| `10 banaw shonkha bodlao x \|`      | `x = (int)10;`   |
+
+| Keyword  | C equivalent  | Meaning           |
+|----------|---------------|-------------------|
+| `bodlao` | `=` (assign)  | Update a variable |
+
+---
+
+## Print
+
+| EngBang     | C equivalent          |
+|-------------|-----------------------|
+| `bolo x \|` | `printf("%d\n", x);`  |
+
+| Keyword | Meaning              |
+|---------|----------------------|
+| `bolo`  | Print / display a value |
+
+---
+
+## Arithmetic Operators
+
+| EngBang | C equivalent |
+|---------|--------------|
+| `+`     | `+`          |
+| `-`     | `-`          |
+| `*`     | `*`          |
+| `/`     | `/`          |
+
+---
+
+## Loops
+
+```
+[varName -> startVal, varName -> endVal] {
+  ...body...
+  varName barbe
+}
+```
+
+### Step Keywords
+
+| EngBang                   | C equivalent | Meaning                |
+|---------------------------|--------------|------------------------|
+| `i barbe`                 | `i++`        | Increment by 1         |
+| `i komabe`                | `i--`        | Decrement by 1         |
+| `i poriborton_by +10`     | `i += 10`    | Add custom amount      |
+| `i poriborton_by -3`      | `i -= 3`     | Subtract custom amount |
+| `i poriborton_by *2`      | `i *= 2`     | Multiply by amount     |
+| `i poriborton_by /4`      | `i /= 4`     | Divide by amount       |
+
+### Loop Control Statements
+
+| EngBang    | C equivalent | Meaning                              |
+|------------|--------------|--------------------------------------|
+| `thamo \|` | `break;`     | Exit the loop immediately            |
+| `agao \|`  | `continue;`  | Skip rest of iteration, go to next   |
+
+---
+
+## Conditionals
+
+```
+varName -> value {
+  [{op}] {
+    ...body...
+  }
+}
+```
+
+### Condition Operators (inside `[...]`)
+
+| EngBang | C equivalent | Meaning               |
+|---------|--------------|-----------------------|
+| `{>=}`  | `>=`         | Greater than or equal |
+| `{<=}`  | `<=`         | Less than or equal    |
+| `{==}`  | `==`         | Equal                 |
+| `{!=}`  | `!=`         | Not equal             |
+| `{>}`   | `>`          | Greater than          |
+| `{<}`   | `<`          | Less than             |
+| `{}`    | (always)     | Always match          |
+
+| Keyword | Meaning                      |
+|---------|------------------------------|
+| `ar`    | Separate multiple bindings   |
+
+---
+
+## Functions
+
+```
+funcName(param -> type) -> returnType {
+  ...body...
+  ferao value |
+}
+```
+
+| Keyword | C equivalent | Meaning        |
+|---------|--------------|----------------|
+| `ferao` | `return`     | Return a value |
+
+---
+
+## Comments
+
+| EngBang      | C equivalent |
+|--------------|--------------|
+| `// text`    | `// text`    |
+| `/* text */` | `/* text */` |
+
+---
+
+## Statement Terminator & Symbols
+
+| Symbol         | C equivalent | Meaning                                      |
+|----------------|--------------|----------------------------------------------|
+| `\|`           | `;`          | End of statement                             |
+| `->`           | (various)    | Type annotation, loop range, function return |
+| `{ }`          | `{ }`        | Block body (loop / conditional / function)   |
+

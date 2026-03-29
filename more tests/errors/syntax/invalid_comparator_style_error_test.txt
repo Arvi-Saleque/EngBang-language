@@ -1,0 +1,12 @@
+// Parse / lex error: direct comparator syntax is not allowed in EngBang
+
+10 rakho x -> shonkha |
+x == 10 {
+  [{==}] {
+    bolo "match" |
+  }
+}
+[] {
+  bolo "no match" |
+}
+|

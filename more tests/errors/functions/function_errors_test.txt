@@ -1,0 +1,18 @@
+// Function semantic errors: wrong return type, wrong arg count, wrong arg type, undefined function
+
+bad() -> shonkha {
+  ferao "hello" |
+}
+
+add(x -> shonkha, y -> shonkha) -> shonkha {
+  ferao x + y |
+}
+
+id(x -> shonkha) -> shonkha {
+  ferao x |
+}
+
+bolo bad() |
+bolo add(5) |
+bolo id("hello") |
+bolo mystery(5) |

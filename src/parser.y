@@ -95,7 +95,7 @@ AstNode* g_parse_result = NULL;
    Keywords
    ---------------------------------------------------------------- */
 %token KW_RAKHO KW_BODLAO KW_PAKKA KW_KHAALI KW_AR KW_BOLO KW_BANAW
-%token KW_BARBE KW_KOMABE KW_THAMO KW_PORIBORTON_BY
+%token KW_BARBE KW_KOMABE KW_THAMO KW_PORIBORTON_BY KW_AGAO
 %token KW_FERAO
 
 /* Types */
@@ -159,6 +159,8 @@ stmt
   | loop_stmt          { $$ = $1; }
   | func_decl          { $$ = $1; }
   | return_stmt  PIPE  { $$ = $1; }
+  | KW_THAMO     PIPE  { $$ = ast_stmt_break(yylineno); }
+  | KW_AGAO      PIPE  { $$ = ast_stmt_continue(yylineno); }
   ;
 
 /* ================================================================

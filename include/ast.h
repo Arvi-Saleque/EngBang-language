@@ -90,7 +90,9 @@ typedef enum {
   STMT_COND_CHAIN,    /* full if / else-if / else chain  */
   STMT_LOOP,          /* [init, end] { body; var barbe } */
   STMT_FUNC_DEF,      /* name(params) -> type { body }  */
-  STMT_RETURN         /* ferao expr                     */
+  STMT_RETURN,        /* ferao expr                     */
+  STMT_BREAK,         /* thamo — break out of enclosing loop    */
+  STMT_CONTINUE       /* agao  — continue to next loop iteration */
 } StmtKind;
 
 /* Payload structs */
@@ -223,6 +225,8 @@ AstNode* ast_stmt_func_def    (char* name, Type ret_type,
                                FuncParamNode* params, int count,
                                AstNode* body, int line);
 AstNode* ast_stmt_return      (AstExpr* expr, int line);
+AstNode* ast_stmt_break       (int line);
+AstNode* ast_stmt_continue    (int line);
 AstExpr* ast_expr_call        (char* name, AstExpr** args, int argc, int line);
 
 /* ================================================================

@@ -7,7 +7,7 @@ $testDir  = ".\tests"
 
 # --- SUCCESS TESTS (compiler must exit 0) -----------------------------------
 $success_tests = @(
-    @{ file = "test_01_variables.txt";           expect = "10, 3.14, EngBang, 1" },
+    @{ file = "test_01_variables.txt";            expect = "10, 3.14, EngBang, 1" },
     @{ file = "test_02_constants_cast.txt";       expect = "100, 0, 5" },
     @{ file = "test_03_arithmetic.txt";           expect = "13, 7, 30, 3" },
     @{ file = "test_04_update.txt";               expect = "10, 20, hello, world, 3.5, 7" },
