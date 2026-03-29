@@ -185,3 +185,118 @@ calculateAverage(tot -> shonkha, cnt -> shonkha) -> doshomik {
   tot banaw doshomik rakho ftot -> doshomik |
   ferao ftot / cnt |
 }
+
+
+
+// chatgpt
+
+# ----------------------------------------
+# code 1
+# ----------------------------------------
+
+a -> b ar c -> d ar x -> y ar p -> q {
+  [{>}, {<}, {}, {}][{}, {}, {==}, {!=}] {
+
+    m -> n ar u -> v ar k -> t {
+      [{>=}, {<}, {}, {}][{}, {}, {!=}] {
+        bolo "Condition 1" |
+      }
+    }
+
+    r + s rakho rs -> shonkha |
+    rs -> t ar w -> z ar h -> j {
+      [{>}, {<=}, {}][{>}, {}, {!=}] {
+        bolo "Condition 2" |
+      }
+    }
+
+    [] {
+      bolo "Condition 3" |
+    }
+  }
+}
+
+a -> b ar c -> d ar x -> y ar p -> q {
+  [{==}, {}, {!=}, {}][{==}, {}, {}, {<}][{}, {>=}, {!=}, {}][{}, {>=}, {}, {<}] {
+
+    m -> n ar u -> v ar k -> t ar h -> j {
+      [{<}, {>=}, {}, {}][{}, {}, {!=}, {>}] {
+        bolo "Condition 4" |
+      }
+    }
+
+    r -> s ar t -> w ar z -> 0 {
+      [{>=}, {>=}, {}][{>=}, {}, {==}] {
+        bolo "Condition 5" |
+      }
+    }
+
+    [] {
+      bolo "Condition 6" |
+    }
+  }
+}
+
+a + b rakho ab -> shonkha |
+d - e rakho de -> shonkha |
+
+ab -> c ar de -> f ar g -> h ar i -> j ar k -> l {
+  [{>}, {<}, {==}, {}, {}][{>}, {<}, {}, {!=}, {>}] {
+    bolo "Condition 7" |
+  }
+}
+
+[] {
+  m * n rakho mn -> shonkha |
+  q / 2 rakho qhalf -> doshomik |
+
+  mn -> p ar qhalf -> r ar s -> t {
+    [{>}, {}, {}][{}, {<}, {!=}] {
+      bolo "Condition 8" |
+    }
+  }
+
+  [] {
+    bolo "Condition 9" |
+  }
+}
+|
+
+
+# ----------------------------------------
+# code 2
+# ----------------------------------------
+
+1 rakho i -> shonkha |
+
+[i -> 1, i -> SUBJECT_COUNT] {
+
+  i -> 1 ar i -> 2 {
+    [{==}, {}] {
+      mark1 + BONUS bodlao mark1 |
+      total + mark1 bodlao total |
+    }
+
+    [{}, {==}] {
+      mark2 + BONUS bodlao mark2 |
+      total + mark2 bodlao total |
+    }
+
+    [] {
+      mark3 + BONUS bodlao mark3 |
+      total + mark3 bodlao total |
+    }
+  }
+
+  i barbe
+}
+
+
+# ----------------------------------------
+# code 3
+# ----------------------------------------
+
+calculateAverage(total -> shonkha, count -> shonkha) -> doshomik {
+  total banaw doshomik rakho temp -> doshomik |
+  ferao temp / count |
+}
