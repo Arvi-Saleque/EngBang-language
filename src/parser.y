@@ -29,7 +29,8 @@ AstNode* g_parse_result = NULL;
   /* Loop parsing helpers */
   typedef struct { char* var; int is_new; int new_type; AstExpr* init; } LoopActual;
   typedef struct { char* var; AstExpr* end; } LoopEndAct;
-  typedef struct { char* var; int step; } LoopCtrlData;
+  typedef struct { char step_op; AstExpr* step_expr; } LoopStepData;
+  typedef struct { char* var; int step; char step_op; AstExpr* step_expr; } LoopCtrlData;
 
   /* Function parsing helpers */
   typedef struct { FuncParamNode* arr; int count; } ParamList;
@@ -58,6 +59,7 @@ AstNode* g_parse_result = NULL;
   BlockList     cblist;   /* cond-block list          */
   LoopActual    lact;     /* loop init data           */
   LoopEndAct    lend;     /* loop end data            */
+  LoopStepData  lstep;    /* loop step op+amount      */
   LoopCtrlData  lctrl;    /* loop control step        */
   FuncParamNode fparam;   /* one function parameter   */
   ParamList     plist;    /* parameter list           */
@@ -83,6 +85,7 @@ AstNode* g_parse_result = NULL;
 %type <cblist> else_if_list
 %type <lact>   loop_init
 %type <lend>   loop_end
+%type <lstep>  loop_step
 %type <lctrl>  loop_ctrl
 %type <fparam> param
 %type <plist>  param_list
@@ -92,7 +95,7 @@ AstNode* g_parse_result = NULL;
    Keywords
    ---------------------------------------------------------------- */
 %token KW_RAKHO KW_BODLAO KW_PAKKA KW_KHAALI KW_AR KW_BOLO KW_BANAW
-%token KW_BARBE KW_KOMABE KW_THAMO
+%token KW_BARBE KW_KOMABE KW_THAMO KW_PORIBORTON_BY
 %token KW_FERAO
 
 /* Types */
@@ -485,7 +488,8 @@ loop_stmt
          so semantic.c can validate variable name consistency. */
       $$ = ast_stmt_loop($2.var, $2.is_new, (Type)$2.new_type, $2.init,
                           $4.var, $4.end,
-                          $8.var, (LoopStep)$8.step, $7, yylineno);
+                          $8.var, (LoopStep)$8.step, $8.step_op, $8.step_expr,
+                          $7, yylineno);
     }
   ;
 
@@ -502,9 +506,32 @@ loop_end
   ;
 
 loop_ctrl
-  : ID KW_BARBE  { $$.var = $1; $$.step = LOOP_INC; }
-  | ID KW_KOMABE { $$.var = $1; $$.step = LOOP_DEC; }
-  | KW_THAMO     { $$.var = NULL; $$.step = LOOP_STOP; }
+  : ID KW_BARBE  { $$.var = $1; $$.step = LOOP_INC; $$.step_op = 0; $$.step_expr = NULL; }
+  | ID KW_KOMABE { $$.var = $1; $$.step = LOOP_DEC; $$.step_op = 0; $$.step_expr = NULL; }
+  | KW_THAMO     { $$.var = NULL; $$.step = LOOP_STOP; $$.step_op = 0; $$.step_expr = NULL; }
+  | ID KW_PORIBORTON_BY loop_step
+                 { $$.var = $1; $$.step = LOOP_CUSTOM;
+                   $$.step_op = $3.step_op; $$.step_expr = $3.step_expr; }
+  ;
+
+loop_step
+  : PLUS  INT   { $$.step_op = '+'; $$.step_expr = ast_expr_int($2,   yylineno); }
+  | MINUS INT   { $$.step_op = '-'; $$.step_expr = ast_expr_int($2,   yylineno); }
+  | STAR  INT   { $$.step_op = '*'; $$.step_expr = ast_expr_int($2,   yylineno); }
+  | SLASH INT   { $$.step_op = '/'; $$.step_expr = ast_expr_int($2,   yylineno); }
+  | PLUS  FLOAT { $$.step_op = '+'; $$.step_expr = ast_expr_float($2, yylineno); }
+  | MINUS FLOAT { $$.step_op = '-'; $$.step_expr = ast_expr_float($2, yylineno); }
+  | STAR  FLOAT { $$.step_op = '*'; $$.step_expr = ast_expr_float($2, yylineno); }
+  | SLASH FLOAT { $$.step_op = '/'; $$.step_expr = ast_expr_float($2, yylineno); }
+  | INT
+    { /* handles lexer-embedded sign, e.g. -2 tokenised as INT(-2) */
+      if ($1 < 0) { $$.step_op = '-'; $$.step_expr = ast_expr_int(-$1, yylineno); }
+      else        { $$.step_op = '+'; $$.step_expr = ast_expr_int($1,  yylineno); }
+    }
+  | FLOAT
+    { if ($1 < 0.0) { $$.step_op = '-'; $$.step_expr = ast_expr_float(-$1, yylineno); }
+      else          { $$.step_op = '+'; $$.step_expr = ast_expr_float($1,  yylineno); }
+    }
   ;
 
 /* ================================================================

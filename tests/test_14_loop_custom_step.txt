@@ -1,0 +1,21 @@
+// Test 14: Loop with poriborton_by (custom step)
+
+// +10 step: i = 0, 10, 20, 30, 40, 50
+1 rakho total -> shonkha |
+[i -> 0 -> shonkha, i -> 50] {
+  total bodlao total + i |
+  i poriborton_by +10
+}
+bolo total |
+
+// *2 step: i = 1, 2, 4, 8, 16 (stop when > 20)
+[j -> 1 -> shonkha, j -> 20] {
+  bolo j |
+  j poriborton_by *2
+}
+
+// /2 step (descending): i = 100, 50, 25 (stop when < 10)
+[k -> 100 -> shonkha, k -> 10] {
+  bolo k |
+  k poriborton_by /2
+}

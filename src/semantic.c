@@ -350,6 +350,14 @@ static void sem_check_node(AstNode* n) {
       if (et != T_UNKNOWN && et != lt)
         sem_err(n->line, "Loop end type mismatch for '%s' (expected %s, got %s)",
                 v, type_name(lt), type_name(et));
+      /* Check custom step expression type (poriborton_by) */
+      if (n->as.loop.step == LOOP_CUSTOM && n->as.loop.step_expr) {
+        Type st = sem_check_expr(n->as.loop.step_expr, n->line);
+        if (st != T_UNKNOWN && st != lt && !(lt == T_FLOAT && st == T_INT))
+          sem_err(n->line,
+                  "Loop step type mismatch for '%s' (expected %s, got %s)",
+                  v, type_name(lt), type_name(st));
+      }
       /* Check body */
       sem_check_list(n->as.loop.body);
       break;

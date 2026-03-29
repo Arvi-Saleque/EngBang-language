@@ -159,6 +159,7 @@ AstNode* ast_stmt_cond(AstCondBlock** blocks, int count,
 AstNode* ast_stmt_loop(char* var, int is_new, Type new_type,
                         AstExpr* init, char* end_var, AstExpr* end,
                         char* ctrl_var, LoopStep step,
+                        char step_op, AstExpr* step_expr,
                         AstNode* body, int line) {
   AstNode* n = alloc_node(STMT_LOOP, line);
   n->as.loop.var       = var;
@@ -169,6 +170,8 @@ AstNode* ast_stmt_loop(char* var, int is_new, Type new_type,
   n->as.loop.init_expr = init;
   n->as.loop.end_expr  = end;
   n->as.loop.step      = step;
+  n->as.loop.step_op   = step_op;
+  n->as.loop.step_expr = step_expr;
   n->as.loop.body      = body;
   return n;
 }
@@ -293,6 +296,7 @@ void ast_list_free(AstNode* list) {
         free(list->as.loop.ctrl_var);
         ast_expr_free(list->as.loop.init_expr);
         ast_expr_free(list->as.loop.end_expr);
+        ast_expr_free(list->as.loop.step_expr);
         ast_list_free(list->as.loop.body);
         break;
       case STMT_FUNC_DEF:

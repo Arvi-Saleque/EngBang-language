@@ -116,9 +116,10 @@ typedef struct {
 
 /* LoopStep — how the loop variable advances per iteration */
 typedef enum {
-  LOOP_INC,   /* barbe  — var++ each iter, continue while var <= end */
-  LOOP_DEC,   /* komabe — var-- each iter, continue while var >= end */
-  LOOP_STOP   /* thamo  — execute body once and exit                  */
+  LOOP_INC,    /* barbe         — var++ each iter, continue while var <= end  */
+  LOOP_DEC,    /* komabe        — var-- each iter, continue while var >= end  */
+  LOOP_STOP,   /* thamo         — execute body once and exit                   */
+  LOOP_CUSTOM  /* poriborton_by — custom step: op (+ - * /) + amount          */
 } LoopStep;
 
 /* One function parameter */
@@ -147,8 +148,10 @@ typedef struct {
   Type     new_type;   /* declared type if is_new == 1           */
   AstExpr* init_expr;  /* starting value expression (owned)      */
   AstExpr* end_expr;   /* terminal value expression (owned)      */
-  LoopStep step;       /* LOOP_INC / LOOP_DEC / LOOP_STOP        */
-  AstNode* body;       /* loop body statement list (owned)       */
+  LoopStep step;       /* LOOP_INC / LOOP_DEC / LOOP_STOP / LOOP_CUSTOM   */
+  char     step_op;    /* '+' '-' '*' '/'  — used only for LOOP_CUSTOM    */
+  AstExpr* step_expr;  /* step amount expression (owned, LOOP_CUSTOM only) */
+  AstNode* body;       /* loop body statement list (owned)                 */
 } LoopData;
 
 /* Payload for STMT_FUNC_DEF */
@@ -214,6 +217,7 @@ AstNode* ast_stmt_cond        (AstCondBlock** blocks, int count, AstNode* else_b
 AstNode* ast_stmt_loop        (char* var, int is_new, Type new_type,
                                AstExpr* init, char* end_var, AstExpr* end,
                                char* ctrl_var, LoopStep step,
+                               char step_op, AstExpr* step_expr,
                                AstNode* body, int line);
 AstNode* ast_stmt_func_def    (char* name, Type ret_type,
                                FuncParamNode* params, int count,

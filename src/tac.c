@@ -301,15 +301,22 @@ static void tac_stmt(AstNode* n) {
         emit("%s = %s", et, ev);
         free(ev);
         emit("%s:", ls);
-        if (n->as.loop.step == LOOP_INC)
+        if (n->as.loop.step == LOOP_INC ||
+            (n->as.loop.step == LOOP_CUSTOM &&
+             (n->as.loop.step_op == '+' || n->as.loop.step_op == '*')))
           emit("if %s > %s goto %s", lv, et, le);
         else
           emit("if %s < %s goto %s", lv, et, le);
         tac_stmts(n->as.loop.body);
         if (n->as.loop.step == LOOP_INC)
           emit("%s = %s + 1", lv, lv);
-        else
+        else if (n->as.loop.step == LOOP_DEC)
           emit("%s = %s - 1", lv, lv);
+        else { /* LOOP_CUSTOM */
+          char* sv = tac_expr(n->as.loop.step_expr);
+          emit("%s = %s %c %s", lv, lv, n->as.loop.step_op, sv);
+          free(sv);
+        }
         emit("goto %s", ls);
         emit("%s:", le);
         free(et);

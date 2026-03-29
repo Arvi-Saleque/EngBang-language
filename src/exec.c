@@ -333,9 +333,18 @@ static void exec_loop(AstNode* n) {
     if (n->as.loop.step == LOOP_INC) {
       if (s->type == T_INT)   cont = (s->val.i <= ev.val.i);
       else                    cont = (s->val.f <= ev.val.f);
-    } else {
+    } else if (n->as.loop.step == LOOP_DEC) {
       if (s->type == T_INT)   cont = (s->val.i >= ev.val.i);
       else                    cont = (s->val.f >= ev.val.f);
+    } else { /* LOOP_CUSTOM */
+      char op = n->as.loop.step_op;
+      if (op == '+' || op == '*') {
+        if (s->type == T_INT)   cont = (s->val.i <= ev.val.i);
+        else                    cont = (s->val.f <= ev.val.f);
+      } else {
+        if (s->type == T_INT)   cont = (s->val.i >= ev.val.i);
+        else                    cont = (s->val.f >= ev.val.f);
+      }
     }
     if (!cont) break;
     exec_stmts(n->as.loop.body);
@@ -344,10 +353,34 @@ static void exec_loop(AstNode* n) {
     s = symtab_lookup(v);
     if (!s) break;
     Value nv = s->val;
-    if (s->type == T_INT)
-      nv.i += (n->as.loop.step == LOOP_INC) ? 1 : -1;
-    else
-      nv.f += (n->as.loop.step == LOOP_INC) ? 1.0 : -1.0;
+    if (n->as.loop.step == LOOP_INC) {
+      if (s->type == T_INT) nv.i += 1;
+      else                  nv.f += 1.0;
+    } else if (n->as.loop.step == LOOP_DEC) {
+      if (s->type == T_INT) nv.i -= 1;
+      else                  nv.f -= 1.0;
+    } else { /* LOOP_CUSTOM */
+      EvalVal sv = exec_expr(n->as.loop.step_expr);
+      char op = n->as.loop.step_op;
+      if (s->type == T_INT) {
+        long sv_i = (sv.type == T_INT) ? sv.val.i : (long)sv.val.f;
+        switch (op) {
+          case '+': nv.i += sv_i; break;
+          case '-': nv.i -= sv_i; break;
+          case '*': nv.i *= sv_i; break;
+          case '/': if (sv_i != 0) nv.i /= sv_i; break;
+        }
+      } else {
+        double sv_f = (sv.type == T_FLOAT) ? sv.val.f : (double)sv.val.i;
+        switch (op) {
+          case '+': nv.f += sv_f; break;
+          case '-': nv.f -= sv_f; break;
+          case '*': nv.f *= sv_f; break;
+          case '/': if (sv_f != 0.0) nv.f /= sv_f; break;
+        }
+      }
+      eval_free(&sv);
+    }
     symtab_set_value(v, s->type, nv);
   }
   eval_free(&ev);

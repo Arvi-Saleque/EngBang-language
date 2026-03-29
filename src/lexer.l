@@ -62,6 +62,7 @@ COND_ANY   \{[^\}\n]*\}
 "barbe"              { return KW_BARBE; }
 "komabe"             { return KW_KOMABE; }
 "thamo"              { return KW_THAMO; }
+"poriborton_by"      { return KW_PORIBORTON_BY; }
 "ferao"              { return KW_FERAO; }
 
 
