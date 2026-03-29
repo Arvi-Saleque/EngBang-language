@@ -16,3 +16,5 @@ test:
 clean:
 	powershell -ExecutionPolicy Bypass -File clean.ps1
 
+
+// Get-Content .\tests\my_test.txt | .\compiler.exe
