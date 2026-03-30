@@ -1,0 +1,18 @@
+// Success: Cast (banaw) — string-to-int, string-to-float, float-to-int in update
+// Expected output:
+// 200
+// 99
+// 8.25
+// 5
+
+"200" banaw shonkha rakho parsed -> shonkha |
+bolo parsed |
+
+"99" banaw shonkha rakho parsed2 -> shonkha |
+bolo parsed2 |
+
+"8.25" banaw doshomik rakho real -> doshomik |
+bolo real |
+
+5 banaw doshomik rakho ratio -> doshomik |
+bolo ratio |
